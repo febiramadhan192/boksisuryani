@@ -70,3 +70,5 @@ echo "NRPE CHECK_TOTAL_PROCS"
 /usr/local/nagios/libexec/check_nrpe -H localhost -c check_total_procs
 echo "NRPE CHECK_ZOMBIE_PROCS"
 /usr/local/nagios/libexec/check_nrpe -H localhost -c check_zombie_procs
+
+#source : http://www.tecmint.com/how-to-add-linux-host-to-nagios-monitoring-server/
