@@ -1,0 +1,35 @@
+using namespace std;
+#include<iostream>
+#include<fstream>
+#include<string.h>
+
+typedef struct {
+	int nim;
+	char kode[5];
+	int nilai;
+} Mahasiswa;
+
+int main() {
+	fstream f;
+	Mahasiswa mhs;
+	int n;
+
+	cout <<"Berapa Jumlah Mahasiswa ?";
+	cin >> n;
+	f.open ("mahasiswa.dat", fstream::out);
+	for (int i=1; i<=n; i++) {
+		cout <<"\nMahasiswa " <<i <<":\n";
+		cout <<"NIM     :"; cin >> mhs.nim;
+		cout <<"Kode MK :"; cin >> mhs.kode;
+		cout <<"Nilai   :"; cin >> mhs.nilai;
+		f.write((char *) &mhs, sizeof (Mahasiswa)); //Menyimpan 1 record
+	}
+	mhs.nim=999;
+	strcpy(mhs.kode,"");
+	mhs.nilai=0;
+	f.write ((char*) &mhs, sizeof (Mahasiswa));
+
+	f.close();
+	return 0;
+}
+
