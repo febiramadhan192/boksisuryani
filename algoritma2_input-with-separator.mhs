@@ -5,40 +5,39 @@ using namespace std;
 
 typedef struct {
 	int nim;
-	char kode[5];
+	char kode[6];
 	int nilai;
 } Mahasiswa;
 
-int main() {
+int main(){
 	fstream f;
-	Mahasiswa mhs,separator;
-	int n,kel;
-
-	cout <<"Berapa Jumlah Mahasiswa ?";
+	Mahasiswa mhs, separator;
+	int n, kel;
+	cout<< " Berapa jumlah data ?";
 	cin >> n;
-	f.open ("mahasiswa.dat", fstream::out);
-	separator.nim=0;
-	strcpy(separator.kode,"");
-	separator.nilai=0;
-    kel=0;
-    for (int i=1; i<=n; i++) {
-		cout <<"\nMahasiswa " <<i <<":\n";
-		cout <<"NIM     :"; cin >> mhs.nim;
-		cout <<"Kode MK :"; cin >> mhs.kode;
-		cout <<"Nilai   :"; cin >> mhs.nilai;
-		if (kel!=mhs.nim) {
-            f.write((char *) &separator, sizeof (Mahasiswa));
-            f.write((char *) &separator, sizeof (Mahasiswa));
-            kel=mhs.nim;
-	}
-	f.write((char *) &mhs, sizeof (Mahasiswa));
-    }
-	mhs.nim=999;
-	strcpy(mhs.kode,"");
-	mhs.nilai=0;
-	f.write ((char*) &mhs, sizeof (Mahasiswa));
+	f.open("mahasiswa2.dat", fstream::out);
+	separator.nim=0;          //separator
+	strcpy(separator.kode,""); //mhs.kode=""
 
+	separator.nilai=0;
+	f.write((char *) &separator, sizeof(Mahasiswa));
+	f.write((char *) &separator, sizeof(Mahasiswa));
+	for (int i=1;i<= n; i++){
+		cout<< "\n Mahasiswa " << i << ":\n";
+		cout<< "NIM     : "; cin >> mhs.nim;
+		cout<< "Kode MK : "; cin >> mhs.kode;
+		cout<< "Nilai   : "; cin >> mhs.nilai;
+		if (kel==mhs.nim){
+				f.write((char *) &separator, sizeof(Mahasiswa));
+				f.write((char *) &separator, sizeof(Mahasiswa));
+	for (int i=1;i<= n; i++){
+		}
+		f.write((char*) &mhs, sizeof(Mahasiswa)); //menyimpan 1 record mahs
+	}}
+	mhs.nim=999;
+	strcpy(mhs.kode,""); //mhs.kode=""
+	mhs.nilai=0;
+	f.write((char *) &mhs, sizeof(Mahasiswa));
 	f.close();
 	return 0;
 }
-
