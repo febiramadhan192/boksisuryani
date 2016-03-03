@@ -1,0 +1,59 @@
+using namespace std;
+#include<iostream>
+#include<fstream>
+
+typedef struct {
+	int nim;
+	char kode[6] ;
+	int nilai;
+} Mahasiswa;
+
+int main(){
+	fstream f;
+	Mahasiswa mhs;
+	int i,n,jml,kel;
+	float rata2;
+	bool hs;
+
+// konsolidasi-1
+f.open("Mahasiswa.dat", fstream::in);
+cout<<"Algoritma Konsolidasi-1\n";
+f.read((char *) &mhs, sizeof (Mahasiswa));
+while (mhs.nim!=999){
+	jml=0;
+	n=0;
+	kel=mhs.nim;
+	do{
+		jml=jml+mhs.nilai;
+		n=n+1;
+		f.read((char *) &mhs, sizeof (Mahasiswa));
+}while (kel==mhs.nim);
+rata2=jml/n;
+cout <<"Rata-rata nilai nim=" <<kel<<"adalah"<<rata2<<endl;
+}
+f.close();
+
+//kosolidasi-2 dengan penanganan kasus kosong
+f.open("Mahasiswa.dat", fstream::in);
+cout<<"Algoritma Konsolidasi-2\n";
+f.read((char *) &mhs, sizeof (Mahasiswa));
+if (mhs.nim==999) {
+	cout << "kosong\n";
+}
+else{
+	do {
+		jml=0;
+		n=0;
+		kel=mhs.nim;
+		do{
+			jml=jml+mhs.nilai;
+			n=n+1;
+			f.read((char *) &mhs, sizeof (Mahasiswa));
+		} while (kel==mhs.nim);
+		rata2=jml/n;
+		cout <<"Rata-rata nilai nim="<<kel<<" adalah " <<rata2<<endl;
+	}while (mhs.nim!=999);
+	}
+	f.close();
+	return 0;
+}
