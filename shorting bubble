@@ -1,0 +1,66 @@
+using namespace std;
+#include <iostream>
+#include <iomanip>
+
+typedef struct {
+    int nim;
+    string nama;
+    int umur;
+} Mhs;
+
+void tampilData (Mhs mhs[],int n) {
+    int i;
+
+    cout <<"DAFTAR MAHASISWA\n";
+    cout <<"=================================\n";
+    cout <<"No    NIM        NAMA        UMUR\n";
+    cout <<"=================================\n";
+    for (i=0;i<n;i++) {
+            cout <<setw(2) <<i+1 <<setw(5) <<mhs[i].nim <<" " <<setw(15) <<mhs[i].nama <<"      " <<setw(3) <<mhs[i].umur <<endl;
+    }
+    cout <<"=================================\n";
+    cout <<endl;
+}
+void inputData(Mhs mhs[],int &n) {
+    int i;
+
+    cout <<"Masukan Banyak Data : ";
+    cin>>n;
+    for (i=0;i<n;i++){
+        cout <<"Masukan data ke-" <<i+1 <<" : \n";
+        cout <<"NIM  : "; cin>>mhs[i].nim;
+        cout <<"Nama : "; cin>>mhs[i].nama;
+        cout <<"Umur : "; cin>>mhs[i].umur;
+    }
+}
+
+void tukar(Mhs &a,Mhs &b) {
+    Mhs c;
+
+    c=a;
+    a=b;
+    b=c;
+}
+void bubbleSort (Mhs mhs[],int n){
+    int i,t;
+
+    for (t=1; t<n; t++) {
+        for (i=n-1;i>=t;i--){
+            if (mhs[i].umur<mhs[i-1].umur){
+                tukar (mhs[i],mhs[i-1]);
+
+            }
+        }
+    }
+}
+
+int main() {
+    Mhs mhs[20];
+    int n;
+    inputData(mhs,n);
+    cout <<"Sebelum Diurutkan :\n";
+    tampilData(mhs,n);
+    bubbleSort(mhs,n);
+    cout <<"Setelah Diurutkan :\n";
+    tampilData(mhs,n);
+}
