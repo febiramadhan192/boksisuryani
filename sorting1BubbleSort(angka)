@@ -1,0 +1,49 @@
+using namespace std;
+#include <iostream>
+#include <iomanip> //untuk mengeluarkan setw
+
+void tampilData (int data[],int n, string ket){ //menampilkan data
+	int i;
+	
+	cout<<ket;
+	for (i=0;i<n;i++){
+		cout<<setw(4)<<data[i]<<" "; //setw untuk menampilkan data dengan 4 width (4 spasi)
+	}
+	cout << endl;
+}
+void inputData(int data[],int &n){ //inputan data
+	int i;
+
+	cout <<"Masukkan banyak nya data : "; cin>> n;
+	for (i=0;i<n;i++){
+		cout << "Masukkan data ke- " <<i+1<<" : " ; cin >> data[i];
+	}
+}
+
+void tukar(int &a,int &b){ //pertukaran data
+	int c;
+	
+	c=a; a=b; b=c;
+}
+
+void bubbleSort(int data[], int n){
+	int i,t;
+	
+	for (t=1;t<n;t++){
+		for (i=n-1;i>=t;i--){
+			if (data[i]<data[i-1]){
+				tukar(data[i],data[i-1]);
+			}
+		}
+	}
+}
+
+int main() {
+	int data[20];
+	int i,n;
+	
+	inputData(data,n);
+	tampilData(data,n," Data Awal   : ") ;
+	bubbleSort (data,n);
+	tampilData(data,n, " Data Akhir  : ");
+}
