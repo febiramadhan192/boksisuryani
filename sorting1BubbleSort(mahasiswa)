@@ -1,0 +1,66 @@
+using namespace std;
+#include <iostream>
+#include <iomanip> //untuk mengeluarkan setw
+
+typedef struct {
+	int nim;
+	string nama;
+	int umur;
+} Mhs;
+
+void tampilData (Mhs mhs[],int n){ //menampilkan data
+	int i;
+	
+	cout << "			DAFTAR MAHASISWA\n" ;
+	cout << "======================================================\n";
+	cout << "No   NIM       NAMA     UMUR\n";
+	cout << "======================================================\n";
+	for (i=0;i<n;i=i++) {
+		cout<<setw(2)<<i+1<<setw(5)<<mhs[i].nim<<" "<<setw(15)
+			<<mhs[i].nama<<"        "<<setw(3)<<mhs[i].umur<<endl;
+}
+	cout << "======================================================\n";
+	
+}
+void inputData(Mhs mhs[],int &n){ //inputan data
+	int i;
+
+	cout <<"Masukkan banyak nya data : ";cin>>n;
+	for (i=0;i<n;i++){
+		cout << "Masukkan data ke- " <<i+1<<" : \n";
+		cout << "NIM    : ";cin>>mhs[i].nim;
+		cout << "NAMA   : ";cin>>mhs[i].nama;
+		cout << "UMUR   : ";cin>>mhs[i].umur;
+		cout << endl;
+	}
+}
+
+void tukar(Mhs &a,Mhs &b){ //pertukaran data
+	Mhs c;
+	
+	c=a; a=b; b=c;
+}
+
+void bubbleSort(Mhs mhs[], int n){
+	int i,t;
+	
+	for (t=1;t<n;t++){
+		for (i=n-1;i>=t;i--){
+			if (mhs[i].umur<mhs[i-1].umur){
+				tukar(mhs[i],mhs[i-1]);
+			}
+		}
+	}
+}
+
+int main() {
+	Mhs mhs[20];
+	int i,n;
+	
+	inputData(mhs,n);
+	cout << "Data sebelum diurutkan :" ;
+	tampilData(mhs,n) ;
+	bubbleSort (mhs,n);
+	cout << "Data setelah diurutkan :" ;
+	tampilData(mhs,n);
+}
