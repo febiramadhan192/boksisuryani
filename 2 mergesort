@@ -1,0 +1,65 @@
+using namespace std;
+#include <iostream>
+
+void Merge(int A[11],int kiri, int tengah, int kanan) {
+	int B[11]; 
+	int i,kidal1, kidal2;
+	
+	kidal1=kiri;     // A[KIRI .. TENGAH]}
+	kidal2=tengah+1; // A[KIRI .. TENGAH]}
+	i=kiri;
+	while (kidal1<=tengah && kidal2<=kanan) {
+		if (A[kidal1] <= A[kidal2]){
+			B[i]=A[kidal1];
+			kidal1=kidal1 + 1;
+		}
+		else{
+			B[i]=A[kidal2];
+			kidal2=kidal2 +1;
+		}
+		i=i+1;	
+	}
+	while (kidal1 <= tengah) {
+		B[i] = A[kidal1];
+		kidal1=kidal1 +1;
+		i=i+1;
+	}
+	while (kidal2<=kanan){
+		B[i] = A[kidal2];
+		kidal2=kidal2 +1;
+		i=i+1;
+	}
+	for (i=kiri;i<=kanan;i++){
+		A[i]=B[i];
+	}
+}
+
+void MergeSort (int A[11], int i , int j){
+	int k;
+	
+	if (i<j) {
+		k=(i+j)/2;
+		MergeSort (A,i,k);
+		MergeSort (A,k+1,j);
+		Merge (A,i,k,j);
+	}
+}
+int main() {
+	//kamus data
+		int n,i;
+		int Data[25];
+		
+		cout<<"Masukkan banyak data : " ;
+		cin>>n;
+		for (i=0;i<n;i++){
+			cout <<"Masukkan data ke- " << i+1 << " : ";
+			cin >> Data[i];
+		}
+		MergeSort(Data,0,n-1);
+		cout << "DATA SETELAH DIURUT: " ;
+		for (i=0;i<n;i++){		
+			cout << Data[i] << " ";
+	}
+		cout << endl;
+		return 0;
+}
