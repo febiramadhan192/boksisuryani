@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+//mencari min dna maks dari array a dari index i  hingga j hasil di taruh di min dan max
+
+void MiniMaks(int A[],int i, int j, int& min, int& maks) { //MiniMaks = nama type data
+	int min1, min2, maks1, maks2, k ;
+	
+	if (i==j){ // kalau data nya satu , kalau jumlah data i dan j nya sama lakukan ini
+		min=A[i];
+		maks=A[i];
+	}
+	else if (i==j-1) { // kalau elemennya ada dua , selisih satu berimpt contoh i=5 j nya 6
+		if (A[i] < A[j]) { //then
+			maks=A[j];
+			min=A[i];
+		}
+		else {
+			maks=A[i];
+			min=A[j];
+		}
+	}
+	else { // kalau data lebih dari dua
+			k=(i+j)/2; // ini di bagi dua dulu data nya, terus hasiny disimpen di k
+			MiniMaks(A, i, k, min1, maks1);
+			MiniMaks(A, k+1, j, min2, maks2);
+			if (min1 < min2) // then
+				min=min1;
+			else
+				min=min2;
+			if (maks1 < maks2) // then
+				maks=maks2;
+			else
+				maks=maks1;
+	}
+}
+int main() {
+		int min,maks,n,i;
+		int Data[25];
+		
+		cout<<"Masukkan banyak data : " ;
+		cin>>n;
+		for (i=0;i<n;i++){
+			cout <<"Masukkan data ke- " << i+1 << " : ";
+			cin >> Data[i];
+		}
+		MiniMaks(Data,0,n-1,min,maks);
+		cout << "Terbesar = " <<maks<<endl;
+		cout << "Terkecil = " <<min<<endl;
+		return 0;
+}
