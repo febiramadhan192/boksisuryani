@@ -1,0 +1,47 @@
+using namespace std;
+#include <iostream>
+
+void Partisi(int A[],int i,int j,int &q) {
+	int pivot,p,temp; 		// pivot itu nilai tengah nya, temp = temporarry untuk menampung output sementara
+
+	pivot=A[(i+j)/2] ; 		//tuh nilai tengah, nilai i+j / 2
+	p=i; q=j; 				// p itu kirinya, q nya kanan
+	do { 					// lakukan perulangan
+		while (A[p]<pivot) p++; 
+		while (A[q]>pivot) q--;
+		if (p<=q) {
+			temp=A[p];A[p]=A[q];A[q]=temp; //tukar ilai A[p] dengn A[q]
+			p++;
+			if (q>i) {
+				q--;
+			}
+		}
+	} while (p<=q);
+}
+void QuickSort(int A[], int i, int j) {
+	int k;
+	if (i < j) {
+		Partisi (A,i,j,k);
+		QuickSort(A,i,k);
+		QuickSort(A,k+1,j);
+	}
+}
+int main() {
+	//kamus data
+		int n,i;
+		int Data[25];
+		
+		cout<<"Masukkan banyak data : " ;
+		cin>>n;
+		for (i=0;i<n;i++){
+			cout <<"Masukkan data ke- " << i+1 << " : ";
+			cin >> Data[i];
+		}
+		QuickSort(Data,0,n-1);
+		cout << "DATA SETELAH DIURUT: " ;
+		for (i=0;i<n;i++){		
+			cout << Data[i] << " ";
+	}
+		cout << endl;
+		return 0;
+}
