@@ -1,0 +1,49 @@
+using namespace std;
+#include <iostream>
+
+bool solusi(int S[],int C[],int uang) { //cek apakan total koin sesuai dengan jumlah uang
+	int s=S[0]*C[0]+S[1]*C[1]+S[2]*C[2]+S[3]*C[3];
+	return s==uang; 			// return true bila s=uang
+}
+
+void printSolusi (int S[],int C[]) {  	//untuk menampilkan solusi nya, koin pertama berapa kedua berapa
+	int i;
+	cout << "Solusi : \n";
+	for (i=0;i<4;i++) {
+		if (S[i]>0) {
+			cout<<C[i]<<" = " << S[i] << "\n";
+		}
+	}
+}
+
+bool layak(int S[], int C[], int x, int uang){
+	if (S[0]*C[0] + S[1]*C[1] +S [2]*C[2] + S[3]*C[3] + x <= uang) { //layak tidak nya
+		return true;
+	}
+	return false;
+}
+int main() {
+	int C[]={25,10,5,1};	// kandidat
+	int S[]={0,0,0,0};		// calon solusi
+	int uang=32;
+	int i,X;
+	
+	i=0;
+	while (layak(S,C,0,uang) && i<4) {
+		X=C[i];
+		if (layak(S,C,X,uang)) {
+			S[i]=S[i]+1;
+		}
+		else {
+				i=i+1;	
+		}
+	
+	}
+	if(solusi(S,C,uang)) {
+		printSolusi(S,C);
+	}
+	else {
+		cout << "GA ADA SOLUSI";
+	}
+	
+}
