@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+#define N 4 //menyatakan banyak nya ratu
+
+int 	col[N+1]; //disediakan kolom sebanyak kolom n+1 sebanyak n
+bool 	colfree[N+1]; //kolom ke 1 free, ya gitu kolom nya free
+bool	upfree[2*N+1]; //ini yang keatas
+bool	downfree[2*N+1]; // ini yang kebawah
+int row,i,j;
+int nosol;
+
+void WriteSolution() { //menampilkan kotak yang ada bintang sama titik
+	int i;
+	nosol=nosol+1;
+	cout << "Solusi ke- " <<nosol<<endl;
+	for (i=1;i<=N;i++) {
+		cout << i << " " ;
+		for (j=1;j<=col[i] -1;j++) cout << " .";
+		cout << " *";
+		for (j=col[i]+1;j<=N;j++)  cout << " .";
+		cout <<endl;
+
+	}
+	cout << endl;
+}
+
+void WriteSol(){ //menampilkan solusi yang berderet ke kanan
+	cout << "Solusi : ";
+	for (j=1;j<=row;j++) cout << col[j]<<" ";
+	cout << endl;
+}
+
+void AddQueen() { //algortma utamanya, ini rekursif (dalam addqueen ada addqueen lagi) kalau row nya blm mencapai n, sampe udah n baru nyampe solusi,
+	int c;
+
+	row=row+1; //belum ada baris yang ke isi terus di tambah satu
+	for (c=1;c<=N;c++) {
+		if (colfree[c] && upfree[row+c] && downfree[row-c+N]) {
+			col[row]=c; //array yang mencatat solusi
+			WriteSol();
+			colfree[c]=false; //false biar ga ada yg pake lagi
+			upfree[row+c]=false;
+			downfree[row-c+N]=false;
+			if (row==N){ //kalau row nya udah 4, tampilkan solusi
+				WriteSolution();
+//				exit(1);
+			}
+			else
+				AddQueen(); //balik lagi jadi di true in syemuaaa
+			//backtrack (yang tadinya false diubah lagi true)
+			col[row]=0; //0 ini artinya beum dapat solusi
+			colfree[c]=true;
+			upfree[row+c]=true;
+			downfree[row-c+N]=true;
+		}
+	}
+	row=row-1; //mundur ke baris sebelumnya
+}
+
+int main() {
+	for (i=1;i<=N;i++) colfree[i]=true;
+	for (i=1;i<=2*N;i++) upfree[i]=true;
+	for (i=1;i<=2*N-1;i++) downfree[i]=true;
+	row=0;nosol=0;
+	AddQueen(); //panggil rekursif lagi, sampe ketemu
+	return 0;
+}
