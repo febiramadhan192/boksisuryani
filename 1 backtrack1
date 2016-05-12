@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+#define N 4
+
+int 	col[N+1];
+bool 	colfree[N+1];
+bool	upfree[2*N+1];
+bool	downfree[2*N+1];
+int row,i,j;
+int nosol;
+
+void WriteSolution() {
+	int i;
+	nosol=nosol+1;
+	cout << "Solusi ke- " <<nosol<<endl;
+	for (i=1;i<=N;i++) {
+		cout << i << " " ;
+		for (j=1;j<=col[i] -1;j++) cout << " .";
+		cout << " *";
+		for (j=col[i]+1;j<=N;j++)  cout << " .";
+		cout <<endl;
+
+	}
+	cout << endl;
+}
+
+void WriteSol(){
+	cout << "Solusi : ";
+	for (j=1;j<=row;j++) cout << col[j]<<" ";
+	cout << endl;
+}
+
+void AddQueen() {
+	int c;
+
+	row=row+1;
+	for (c=1;c<=N;c++) {
+		if (colfree[c] && upfree[row+c] && downfree[row-c+N]) {
+			col[row]=c;
+			WriteSol();
+			colfree[c]=false;
+			upfree[row+c]=false;
+			downfree[row-c+N]=false;
+			if (row==N)
+				WriteSolution();
+			else
+				AddQueen();
+			//backtrack (yang tadinya false diubah lagi true)
+			col[row]=0;
+			colfree[c]=true;
+			upfree[row+c]=true;
+			downfree[row-c+N]=true;
+		}
+	}
+	row=row-1; //mundur ke baris sebelumnya
+}
+
+int main() {
+	for (i=1;i<=N;i++) colfree[i]=true;
+	for (i=1;i<=2*N;i++) upfree[i]=true;
+	for (i=1;i<=2*N-1;i++) downfree[i]=true;
+	row=0;nosol=0;
+	AddQueen();
+	return 0;
+}
