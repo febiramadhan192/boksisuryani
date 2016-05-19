@@ -1,0 +1,68 @@
+using namespace std;
+#include <iostream>
+#include <stdlib.h>
+#include <string>
+
+#define Null		NULL
+#define Info(P)		(P)->Info
+#define Next(P) 	(P)->Next
+#define First(L)	(L)
+
+//Kamus Global
+typedef int Infotype;
+typedef struct sElmt Elmt;
+typedef Elmt* Address;
+typedef Address List;
+
+struct sElmt {
+	Infotype Info;
+	Address Next;
+};
+
+void Allocate(Address &P) {
+	P=(Address)new Elmt;	
+}
+
+void Deallocate(Address P) {
+	free(P);
+}
+
+void CreateElm(Address &P, Infotype X) {
+	Allocate(P);
+	Info(P)=X;
+	Next(P)=Null;
+}
+
+void Tampil(List L, string pesan) {
+	Address P;
+	
+	cout <<pesan;
+	P=First(L);
+	while (P !=Null){
+		cout << Info(P) << " ";
+		P=Next(P);
+	}
+	cout << endl;
+}
+
+void InsertFirst(List &L, Address P) {
+	Next(P)=First(L);
+	First(L)=P;
+}
+int main(){
+	List L1,L2;
+	Address P,Q;
+	
+	L1=Null;
+	CreateElm(P,50);InsertFirst(L1,P);
+	CreateElm(P,20);InsertFirst(L1,P);
+	CreateElm(P,30);InsertFirst(L1,P);
+	L2=Null;
+	CreateElm(P,30);InsertFirst(L2,P);
+	CreateElm(P,70);InsertFirst(L2,P);
+	CreateElm(P,60);InsertFirst(L2,P);
+	Tampil(L1,"Isi List L1 : ");
+	Tampil(L2,"Isi List L2 : ");
+	system("PAUSE");
+	return 0;
+}
