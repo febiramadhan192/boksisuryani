@@ -1,0 +1,123 @@
+using namespace std;
+#include <iostream>
+#include <stdlib.h>
+#include <string>
+
+#define Null		NULL 		//define untuk membuat nama baru, misal nama asli nya NULL, ganti jadi Null
+#define Info(P)		(P)->Info
+#define Next(P) 	(P)->Next
+#define First(L)	(L)
+
+//Kamus Global
+typedef int Infotype;			//membuat type baru
+typedef struct sElmt Elmt;		//nama tipe nya Elmt pengganti dari struct
+typedef Elmt* Address;			//type baru namanya address bintang artinya petunjuk
+typedef Address List;			//list sama aja kaya address
+
+struct sElmt {
+	Infotype Info;
+	Address Next;
+};
+
+void Allocate(Address &P) { 	//memesan tempat di memori
+	P=(Address)new Elmt;	
+}
+
+void Deallocate(Address P) {	//membebaskan memori
+	free(P);
+}
+
+void CreateElm(Address &P, Infotype X) {
+	Allocate(P);
+	Info(P)=X;
+	Next(P)=Null;
+}
+
+void Tampil(List L, string pesan) {
+	Address P;
+	
+	cout <<pesan;
+	P=First(L);					//menunjuk data pertama
+	while (P !=Null){
+		cout << Info(P) << " ";	//tampilkan
+		P=Next(P);				//lalu next
+	}
+	cout << endl;
+}
+
+void InsertFirst(List &L, Address P) {
+	Next(P)=First(L);
+	First(L)=P;
+}
+
+void InsertLast(List &L, Address P) {
+	Address Q;
+	Q=First(L);
+	while (Next(Q)!=Null) {
+	Q=Next(Q);
+	}
+	Next(Q)=P;
+}
+
+void DeleteFirst(List &L, Address &P) { //dikeluarkan dari list
+	if (P!=Null){
+		P=First(L);
+		First(L)=Next(P);
+	}
+}
+
+void BalikList(List &L) {
+	List L2=Null;
+	Address P;
+	
+	while (L!=Null) {
+		DeleteFirst(L,P);
+		InsertFirst(L2,P);
+	}
+	L=L2;
+}
+int main(){
+	List L1,L2;
+	Address P,Q;
+	
+	L1=Null;
+	CreateElm(P,50);InsertFirst(L1,P);	//50 di depan
+	CreateElm(P,20);InsertLast(L1,P);	//insert first jadi dia di depan terus
+	CreateElm(P,30);InsertFirst(L1,P);	//jadi tampilan nya 30,20,50 jadi yg di input terakhir di masukin pertama
+	CreateElm(P,30);InsertLast(L1,P);
+	CreateElm(P,70);InsertFirst(L1,P);
+	CreateElm(P,60);InsertLast(L1,P);
+	Tampil(L1,"Isi List L1 : ");
+	//tampil ke-1
+	P=First(L1);
+	cout << "data ke-1 : " <<Info(P)<<endl;
+	//tampil ke-2
+	P=First(L1);
+	P=Next(P);
+	cout <<"data ke-2 : " <<Info(P)<<endl;
+	//tampil ke-5
+	P=First(L1);
+	for (int i=1;i<=4;i++){
+		P=Next(P);
+	}
+	cout <<"data ke-5 : " <<Info(P)<<endl;
+	//tampil ke-1 sampai ke-3
+	cout <<"data ke-1 sampai ke-3 : ";
+	P=First(L1);
+	for (int i=1;i<=3;i++){
+		cout<<Info(P) <<" " ;
+		P=Next(P);
+	}
+	cout <<endl;
+	//tampil 1 data yang terakhir saja
+	P=First(L1);
+	while (Next(P)!=Null) {
+		P=Next(P);
+	}
+	cout <<"data terakhir : " <<Info(P)<<endl;
+	BalikList(L1);
+	Tampil(L1,"Isi List L1 : ");
+	
+	system("PAUSE");
+	return 0;
+}
