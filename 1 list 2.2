@@ -1,0 +1,200 @@
+//delete & insert after
+
+using namespace std;
+#include <iostream>
+#include <stdlib.h>
+#include <string>
+
+#define Null		NULL 		//define untuk membuat nama baru, misal nama asli nya NULL, ganti jadi Null
+#define Info(P)		(P)->Info
+#define Next(P) 	(P)->Next
+#define First(L)	(L)
+
+//Kamus Global
+typedef int Infotype;			//membuat type baru
+typedef struct sElmt Elmt;		//nama tipe nya Elmt pengganti dari struct
+typedef Elmt* Address;			//type baru namanya address bintang artinya petunjuk
+typedef Address List;			//list sama aja kaya address
+
+struct sElmt {
+	Infotype Info;
+	Address Next;
+};
+
+void Allocate(Address &P) { 	//memesan tempat di memori
+	P=(Address)new Elmt;
+}
+
+void Deallocate(Address P) {	//membebaskan memori
+	free(P);
+}
+
+void CreateElm(Address &P, Infotype X) {
+	Allocate(P);
+	Info(P)=X;
+	Next(P)=Null;
+}
+
+void Tampil(List L, string pesan) {
+	Address P;
+
+	cout <<pesan;
+	P=First(L);					//menunjuk data pertama
+	while (P !=Null){
+		cout << Info(P) << " ";	//tampilkan
+		P=Next(P);				//lalu next
+	}
+	cout << endl;
+}
+
+void InsertFirst(List &L, Address P) {
+	Next(P)=First(L);
+	First(L)=P;
+}
+
+void InsertLast(List &L, Address P) {
+	Address Q;
+	Q=First(L);
+	while (Next(Q)!=Null) {
+	Q=Next(Q);
+	}
+	Next(Q)=P;
+}
+
+void DeleteFirst(List &L, Address &P) { //dikeluarkan dari list
+	if (L!=Null){
+		P=First(L);
+		First(L)=Next(P);
+		Next(P)=Null;
+	}
+}
+
+void DeleteLast (List &L, Address &P) {
+	Address Q;
+
+	Q=First(L);
+	if (Next(Q)==Null) {
+		P=Q;
+		First(L)=Null;
+	}
+	else {
+			while (Next(Next(Q))!=Null) {
+				Q=Next(Q);
+			}
+	}
+	P=Next(Q);
+	Next(Q)=Null;
+	}
+
+void BalikList(List &L) {
+	List L2=Null;
+	Address P;
+
+	while (L!=Null) {
+		DeleteFirst(L,P);
+		InsertFirst(L2,P);
+	}
+	L=L2;
+}
+
+Address SearchInfo(List L, Infotype X) {
+	Address P;
+
+	P=First(L);
+	while (P!=Null){
+		if (Info(P)==X){
+			return P;
+		}
+		else {
+			P=Next(P);
+		}
+	}
+}
+
+void InsertAfter (Address P, Address Q) { //insert P after Q
+	Next(P)=Next(Q);
+	Next(Q)=P;
+}
+
+void DeleteAfter(Address Q, Address &P) { //delete After Q, tampung di P
+	P=Next(Q);
+	Next(Q)=Next(P);
+}
+
+int main () {
+	List L;
+	Address P,Q;
+	int pil, bil, bil2;
+
+	L=Null;
+	pil=0;
+	do {
+		Tampil(L,"Data : \n\n");
+		cout << "MENU\n\n";
+		cout << "1. Insert First : \n" ;
+		cout << "2. Insert Last : \n" ;
+		cout << "3. Insert After : \n" ;
+		cout << "4. Delete First : \n" ;
+		cout << "5. Delete Last : \n" ;
+		cout << "6. Delete After: \n" ;
+		cout << "7. Selesai\n\n";
+		cout << "PILIHAN = ";
+		cin >> pil;
+		switch (pil) {
+			case 1:
+			cout << "Masukkan bilangan yang mau diinsert : \n";
+			cin >> bil;
+			CreateElm (P,bil);
+			InsertFirst (L,P);
+			break;
+
+			case 2 :
+			cout << "Masukkan bilangan yang mau diinsert : \n";
+			cin >> bil;
+			CreateElm (P,bil);
+			InsertLast (L,P);
+			break;
+
+            case 3 :
+            cout << "Masukkan bilangan yang mau diinsert: \n";
+            cin >> bil;
+            CreateElm(P,bil);
+            cout << "diinsert setelah bilangan berapa : \n ";
+            cin >> bil2;
+            Q=SearchInfo(L,bil2);
+            if (Q==Null){
+                cout << "Karena yang dicari tidak ada, diinsert di akhir \n";
+                InsertLast(L,P);
+            }
+            else {
+                InsertAfter(P,Q);
+            }
+			break;
+
+			case 4 :
+			DeleteFirst(L,P);
+			Deallocate(P);
+			break;
+
+			case 5 :
+			DeleteLast(L,P);
+			Deallocate(P);
+			break;
+
+			case 6 :
+            cout << "Yang mau di hapus setelah bilangan berapa? : ";
+            cin>>bil2;
+            Q=SearchInfo(L,bil2);
+            if (Q==Null) {
+                cout << "Tidak jadi dihapus, karena yang dicari tidak ada \n";
+            } else {
+                DeleteAfter(Q,P);
+                Deallocate(P);
+                }
+
+
+		}
+	} while (pil!=7);
+	system("PAUSE");
+	return 0;
+}
