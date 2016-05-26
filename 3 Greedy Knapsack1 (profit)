@@ -1,0 +1,55 @@
+using namespace std;
+#include <iostream>
+
+bool solusi(int S[],int C[],int totBerat) { //cek apakan total koin sesuai dengan jumlah uang
+	int s=S[0]*C[0]+S[1]*C[1]+S[2]*C[2]+S[3]*C[3] +S[4]*C[4]+S[5]*C[5];
+	return s==totBerat; 			// return true bila s=uang
+} 
+
+void printSolusi (int S[],int C[],int P[]) {  	//untuk menampilkan solusi nya, koin pertama berapa kedua berapa
+	int i,totUntung=0,totalBobot=0;
+	
+	cout << "Solusi : \n";
+	for (i=0;i<6;i++) {
+		if (S[i]>0) {
+			cout<<C[i]<<" = " << S[i] << "\n";
+			totUntung=totUntung+P[i];
+			totalBobot=totalBobot+C[i];
+		}
+	}
+	cout << "Total Bobot = " << totalBobot <<endl;
+	cout << "Total Keuntungan = " << totUntung <<endl;
+}
+
+bool layak(int S[], int C[], int x, int totBerat){
+	if (S[0]*C[0]+S[1]*C[1]+S[2]*C[2]+S[3]*C[3] +S[4]*C[4]+S[5]*C[5] + x <= totBerat) { //layak tidak nya
+		return true;
+	}
+	return false;
+}
+int main() {
+	int C[]={5,10,20,45,50,100};	// kandidat
+	int P[]={2,10,4,18,35,40}; 		//kandidat
+	int S[]={0,0,0,0,0,0};				// calon solusi
+	int totBerat=100;
+	int i,X;
+	
+	i=0;
+	while (layak(S,C,0,totBerat) && i<6) {
+		X=C[i];
+		if (layak(S,C,X,totBerat)) {
+			S[i]=S[i]+1;
+		}
+//		else { 
+				i=i+1;	
+//		}
+	
+	}
+	if(solusi(S,C,totBerat)) {
+		printSolusi(S,C,P);
+	}
+	else {
+		cout << "GA ADA SOLUSI";
+	}
+	
+}
