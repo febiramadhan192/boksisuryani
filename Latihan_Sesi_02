@@ -1,0 +1,119 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace Latihan_Sesi_02
+{
+    public partial class frmLatihan : Form
+    {
+        public frmLatihan()
+        {
+            InitializeComponent();
+
+            cmbTumbuhan.Items.Add("Bunga");
+            cmbTumbuhan.Items.Add("Pinus");
+            cmbTumbuhan.Items.Add("Lumut");
+            cmbTumbuhan.Items.Add("Rumput");
+            cmbTumbuhan.Items.Add("Gangga");
+            cmbTumbuhan.Items.Add("Mahoni");
+
+       
+
+            lstMinuman.Items.Add("Bandrek");
+            lstMinuman.Items.Add("Vanila Late");
+            lstMinuman.Items.Add("Kopi");
+            lstMinuman.Items.Add("Susu");
+            lstMinuman.Items.Add("Jus Markisa");
+            lstMinuman.Items.Add("Cappucino");
+           
+
+        }
+
+        private void btnTambah_Click(object sender, EventArgs e)
+        {
+            //txtHasil.Text = String.Concat(Int32.Parse(txtAngka1.Text) + Int32.Parse(txtAngka2.Text));
+            txtHasil.Text = (Int32.Parse(txtAngka1.Text) + Int32.Parse(txtAngka2.Text)).ToString();
+        }
+
+        private void btnKurang_Click(object sender, EventArgs e)
+        {
+            txtHasil.Text = (Int32.Parse(txtAngka1.Text) - Int32.Parse(txtAngka2.Text)).ToString();
+
+        }
+
+        private void btnKali_Click(object sender, EventArgs e)
+        {
+            txtHasil.Text = (Int32.Parse(txtAngka1.Text) * Int32.Parse(txtAngka2.Text)).ToString();
+        }
+
+        private void btnBagi_Click(object sender, EventArgs e)
+        {
+            txtHasil.Text = (Int32.Parse(txtAngka1.Text) / Int32.Parse(txtAngka2.Text)).ToString();
+        }
+
+        private void btnModulus_Click(object sender, EventArgs e)
+        {
+            txtHasil.Text = (Int32.Parse(txtAngka1.Text) % Int32.Parse(txtAngka2.Text)).ToString();
+        }
+
+        private void cmbTumbuhan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            InitializeComponent();
+
+            cmbTumbuhan.Items.Add("Bunga");
+            cmbTumbuhan.Items.Add("Pinus");
+            cmbTumbuhan.Items.Add("Lumut");
+            cmbTumbuhan.Items.Add("Rumput");
+            cmbTumbuhan.Items.Add("Gangga");
+            cmbTumbuhan.Items.Add("Mahoni");
+           
+        }
+
+        private void lstMinuman_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            InitializeComponent();
+
+            lstMinuman.Items.Add("Bandrek");
+            lstMinuman.Items.Add("Vanila Late");
+            lstMinuman.Items.Add("Kopi");
+            lstMinuman.Items.Add("Susu");
+            lstMinuman.Items.Add("Jus Markisa");
+            lstMinuman.Items.Add("Cappucino");
+
+        }
+
+        private void chkHide_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkHide.Checked == true)
+            {
+                txtHide.Visible = false;
+            }
+            else
+            {
+                txtHide.Visible = true;
+            }
+
+        }
+
+        private void chkDisable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDisable.Checked == true)
+            {
+                txtDisable.Enabled = false;
+            }
+            else
+            {
+                txtDisable.Enabled = true;
+            }
+
+        }
+     
+
+   
+    }
+}
