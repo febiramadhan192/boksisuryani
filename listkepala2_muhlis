@@ -1,0 +1,321 @@
+#include <conio.h>
+#include <iostream>
+#include <malloc.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdio.h>
+
+using namespace std;
+
+struct List{
+	int NIM;
+	char Nama[20];
+	float IPK;
+	List *Next;
+	};
+
+List *Head, *Tail; 
+
+void AddAkhir(List *Head, List *Tail, int newNIM, char newNama[20], float newIPK)
+{
+    List *Baru;
+    Baru = new(List);
+    Baru -> NIM = newNIM;
+    strcpy(Baru->Nama,newNama);
+    Baru -> IPK = newIPK;
+    if (Head -> Next == NULL) //List masih kosong
+    {
+        Head -> Next = Baru;
+    }
+    else // List sudah berisi 
+    {
+        (Tail->Next)->Next = Baru;
+    }
+    Tail -> Next = Baru;
+    Baru -> Next = NULL;
+}
+
+void AddAwal(List *Head, List *Tail, int newNIM, char newNama[20], float newIPK)
+{
+ 	List *Baru;
+    Baru = new(List);
+    Baru -> NIM = newNIM;
+    strcpy(Baru->Nama,newNama);
+    Baru -> IPK = newIPK;
+    if (Head->Next == NULL)
+    {
+    	Head->Next = Baru;
+    	Tail->Next = Baru;
+    }
+    else
+    {
+    	Baru->Next = Head->Next;
+    	Head->Next = Baru;
+    }
+}
+
+void ViewList(List *Head, List *Tail)
+{
+  
+    
+    if (Head->Next == NULL)
+        cout<<"List Kosong\n";
+    else
+    {
+    	List *PNow;
+        PNow = Head -> Next;
+        while (PNow != NULL)
+        {
+                cout<<"nomor  	: "<<PNow -> NIM<<endl;
+                cout<<"judul 	: "<<PNow -> Nama<<endl;
+                cout<<"rating    	: "<<PNow -> IPK <<endl;
+                PNow = PNow -> Next;
+        }
+    }
+}
+
+
+void SearchList(List *Head, List *Tail, int NIMCari)
+{
+    bool found = false;
+    List *PNow;
+    PNow = Head -> Next;
+    while (PNow != NULL && !found)
+    {
+    	if (PNow -> NIM == NIMCari)
+    	{
+    		found = true;
+    	}
+    	else
+    	{
+    		PNow = PNow -> Next;
+    	}
+    }
+    if (found) 		//ketemu
+	{
+		cout<<"nomor		:"<<PNow -> NIM<<endl;
+		cout<<"judul	:"<<PNow -> Nama<<endl;
+		cout<<"rating	:"<<PNow -> IPK<<endl;
+	} 
+	else 	// tidak ketemu
+	{
+		printf("Data %d tidak ditemukan.\n",NIMCari);
+	}
+
+}
+
+void DeleteList(List *Head, List *Tail, int NIMHapus)
+{
+    List *Hapus, *Bantu;
+    Hapus = Head->Next;
+	if (Head->Next == NULL)
+	{
+		printf("\n=====================\n");
+		printf("List masih kosong");
+		printf("\n=====================\n");
+	}
+	else if (Hapus->NIM == NIMHapus)
+	{
+		if (Head->Next == Tail->Next)
+		{
+			Head->Next == NULL;
+			Tail->Next == NULL;
+		}
+		else
+		{
+			Head->Next = Hapus->Next;
+		}
+	}
+	else
+	{
+		Bantu = NULL;
+		while (NIMHapus != Hapus->NIM and Hapus->Next != NULL)
+		{
+			Bantu = Hapus;
+			Hapus = Hapus->Next;
+		}
+		
+		if (NIMHapus == Hapus->NIM)
+		{
+			if (Hapus->Next == NULL)
+			{
+				Tail->Next = Bantu;
+				Bantu->Next = NULL;
+			}
+			else
+			{
+				Bantu->Next = Hapus->Next;
+			}
+		}
+		else
+		{
+			printf("\n=====================\n");
+			printf("Data yg akan dihapus tidak ditemukan.");
+			printf("\n=====================\n");
+		}
+	}
+
+}
+
+void MinMaxList(List *Head, List *Tail)
+{
+List *PMin, *PMax;
+    List *PNow;
+    PNow = Head->Next;
+    PMin = PNow;
+    PMax = PNow;
+    if (PNow == NULL) {
+        printf("List kosong.\n");
+    }
+    else {    
+        while (PNow != NULL)
+        {
+                if (PNow->IPK > PMax->IPK)
+                {        
+                    PMax = PNow;
+                }
+                if (PNow->IPK < PMin->IPK)
+                {        
+                    PMin = PNow;
+                }
+                PNow = PNow->Next;
+        }
+        printf("Data rating tertinggi\n");
+        cout<<"Id  		: "<<PMax -> NIM<<endl;
+        cout<<"Judul Film	: "<<PMax -> Nama<<endl;
+        cout<<"Rating		: "<<PMax -> IPK<<endl;
+        printf("\nData rating terendah\n");
+        cout<<"Id  		: "<<PMin -> NIM<<endl;
+        cout<<"Judul Film	: "<<PMin -> Nama<<endl;
+        cout<<"Rating		: "<<PMin -> IPK<<endl;
+    }
+}
+
+void Rata2rating(List *Head, List *Tail)
+{
+	float jumlah = 0.0, rata;
+	int n = 0;
+    List *PNow;
+    PNow = Head->Next;
+    if (PNow == NULL) {
+        printf("List kosong.\n");
+    }
+    else {    
+        while (PNow != NULL)
+        {
+        jumlah = jumlah + PNow -> IPK;
+        n = n + 1;
+        PNow = PNow->Next;
+        }
+        rata = jumlah / n;
+        printf("Rata - rata IPK = %0.2f",rata);
+}
+}
+int main()
+{
+ int Pilih;
+
+ //Inisialisasi
+ Head = new(List);
+ Head->Next = NULL;
+ Tail = new(List);
+ Tail->Next = NULL;
+
+ do
+ {
+  //clrscr();
+  cout<<"\n*************************\n";
+  cout<<"*  M E N U   U T A M A           	  *\n";
+  cout<<"* 1. Add Data (di akhir)         	  *\n";
+  cout<<"* 2. Add Data (di awal)         	  *\n";
+  cout<<"* 3. View Data                  	  *\n";
+  cout<<"* 4. Search Data                	  *\n";
+  cout<<"* 5. Delete Data                	  *\n";
+  cout<<"* 6. Min & Max Value             	  *\n";
+  cout<<"* 7. Rata-rata IPK                     *\n";
+  cout<<"* 8. Exit                        	  *\n";
+  cout<<"*************************\n";
+  cout<<"Pilih Menu [1/2/3/4/5/6/7] : ";cin>>Pilih;
+
+  switch(Pilih)
+  {
+   case 1 : /*1. Add Data (di akhir)*/
+           {
+            char Lagi ='Y';
+
+            do
+            {
+                int inputid;
+                char inputjudul[20];
+                float inputrating;
+                
+                cout<<"Masukan NIM  		: ";cin>>inputid;
+                cout<<"Masukan Nama  		: ";cin>>inputjudul;
+                cout<<"Masukan IPK		  	: ";cin>>inputrating;
+                
+                AddAkhir(Head,Tail,inputid,inputjudul,inputrating);
+                
+                cout<<"Input data Lagi [Y/T] : ";cin>>Lagi;
+            }while (Lagi == 'Y' || Lagi == 'y');
+            break;
+           }
+   case 2 : /*2. Add Data (di awal) -- Bonus*/ 
+           {
+           	char Lagi ='Y';
+
+            do
+            {
+                int inputNIM;
+                char inputNama[20];
+                float inputIPK;
+
+                cout<<"Masukan NIM  	    	: ";cin>>inputNIM;
+                cout<<"Masukan Nama  		: ";cin>>inputNama;
+                cout<<"Masukan IPK	  	: ";cin>>inputIPK;
+
+                AddAwal(Head, Tail, inputNIM,inputNama,inputIPK);
+
+                cout<<"Input data Lagi [Y/T] : ";cin>>Lagi;
+            }while (Lagi == 'Y' || Lagi == 'y');
+            break;
+           }          
+   case 3 : /*3. View Data*/
+           {
+               ViewList(Head, Tail);
+               break;
+           }
+   case 4 : /*4. Search Data berdasarkan id*/
+           {
+           	int Nimcari;
+			cout << "Masukan NIM : ";
+			
+			int inputid;
+           	cout<<"Masukan NIM yang akan di cari : ";cin>>inputid;
+           	SearchList(Head, Tail, inputid);
+                break;
+           }
+   case 5 : /*5. Delete Data berdasarkan id*/
+           {
+           	int inputid;
+                cout<<"Masukan NIM yang akan dihapus : ";cin>>inputid;
+           		DeleteList(Head, Tail, inputid);
+                break;
+           }
+   case 6 :/*6. Min & Max Value - rating*/
+           {
+           	MinMaxList(Head, Tail);
+                break;
+           }
+   case 7 :/*6. Rata-rata rating*/
+           {
+            Rata2rating(Head, Tail);    
+				break;
+           }
+   case 8 : cout<<"End of Application!!!";getch();break;
+   default : cout<<"Salah pilih !!!";getch();break;
+  }
+
+ }while (Pilih >= 1 && Pilih <= 7);
+ return 0;
+}
+
