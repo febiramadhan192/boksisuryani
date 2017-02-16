@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+class Point {
+	private:
+		int x;
+		int y;
+		int a;
+		int b;
+	public:
+		Point(){
+			x=0;y=0;
+		}
+		Point(int xx, int yy) {
+			x=xx;y=yy;
+		}
+		void set (int xx, int yy){
+			x=xx;y=yy;
+		}
+		void setx (int xx){
+			x=xx;
+		}
+		void sety (int yy){
+			y=yy;
+		}
+		
+		int getx(){
+			return x;
+		}
+		
+		int gety(){
+			return y;
+		}
+		
+/*		int multiply(int x, int y){
+			a=x*y;
+			return a;
+		}
+		
+		int devide( int x, int y){
+			b=x/y;
+			return b;
+		} */
+		
+		int multiply(){
+			a=x*y;
+			return a;
+		}
+		
+		int devide(){
+			b=x/y;
+			return b;
+		}
+		
+	};
+	
+/*	int main(){
+	int xx, yy;
+	Point x;
+	Point a;
+	Point b;
+	cout << "Masukkan nilai x = " ; cin >> xx;
+	x.setx(xx);
+	cout << " NILAI X ADALAH = " << x.getx() << endl;
+
+	cout << "Masukkan nilai y = " ; cin >> yy;
+	x.sety(yy);
+	cout << " NILAI Y ADALAH = " << x.gety() << endl;
+
+	cout << " x*y = "<< a.multiply(xx,yy) << endl;
+	cout << " x/y = "<< b.devide(xx,yy) << endl;
+	return 0;
+} */
+
+int main(){
+	Point p;
+	p.set(30,5);
+//	int xx; int yy ;
+	
+	cout << "point x " << p.getx()<< endl;
+	cout << "point y " << p.gety()<< endl;
+	cout << "x * y = " << p.multiply()<< endl;
+	cout << "x / y = " << p.devide()<< endl;
+	return 0 ;
+}
+	
+	
+		
