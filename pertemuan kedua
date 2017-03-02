@@ -1,0 +1,62 @@
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+class Mahasiswa {
+	private :
+		string nama;
+		int usia;
+		string jk;
+		int semester;
+	public :
+		void setnama (string inama) {
+			nama = inama;
+		}
+		void setusia (int iusia) {
+			usia = iusia;
+		}
+		void setjk (string ijk) {
+			jk = ijk;
+		}
+		void setsemester (int isemester){
+			semester = isemester;
+		}
+		string getnama(){
+			return nama;
+		}
+		int getusia(){
+			return usia;
+		}
+		string getjk(){
+			return jk;
+		}
+		int getsemester(){
+			return semester;
+		}
+};
+
+int main(){
+	Mahasiswa man;
+	Mahasiswa baru;
+	man.setnama ("ALVERA");
+	man.setusia (19);
+	man.setjk ("perempuan");
+	man.setsemester (4);
+	
+	baru.setnama ("CITRA");
+	baru.setusia (19);
+	baru.setjk ("perempuan");
+	baru.setsemester (4);
+	
+	cout << "NAMA = " << man.getnama() << endl;
+	cout << "USIA = " << man.getusia() << endl;
+	cout << "JENIS KELAMIN = " << man.getjk() << endl;
+	cout << "SEMESTER = " << man.getsemester() << endl;
+	
+	cout << "NAMA = " << baru.getnama() << endl;
+	cout << "USIA = " << baru.getusia() << endl;
+	cout << "JENIS KELAMIN = " << baru.getjk() << endl;
+	cout << "SEMESTER = " << baru.getsemester() << endl;
+	
+	return 0;
+}
